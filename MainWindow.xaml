@@ -1,0 +1,27 @@
+﻿<Window x:Class="sfValidation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sf="clr-namespace:SoftFluent.Windows;assembly=SoftFluent.Windows"
+        xmlns:local="clr-namespace:sfValidation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <DataTemplate x:Key="TextEditor">
+            <TextBlock Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True,ValidatesOnNotifyDataErrors=True,NotifyOnValidationError=True}" />
+        </DataTemplate>
+        <Style x:Key="txb" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="ToolTip"   
+                            Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <sf:PropertyGrid SelectedObject="{Binding data,UpdateSourceTrigger=PropertyChanged}"/>
+    </Grid>
+</Window>
